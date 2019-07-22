@@ -1,0 +1,56 @@
+{
+  "name": "lifap5-backend",
+  "version": "1.1.3",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "homepage": "https://perso.liris.cnrs.fr/romuald.thion/dokuwiki/doku.php?id=enseignement:lifap5:start",
+  "description": "Backend pour le projet LIFAP5 2018-2019 (forum)",
+  "main": "app.js",
+  "scripts": {
+    "start": "npm run start:dev",
+    "start:dev": "DEBUG=lifap5:* nodemon server.js",
+    "test": "newman -k -e ../tests/lifap5-backend-env.postman_environment.json run ../tests/lifap5-backend.postman_collection.json"
+  },
+  "repository": {
+    "type": "svn",
+    "url": "https://subversion.renater.fr/lifap5/trunk/Projet"
+  },
+  "keywords": [
+    "lifap5",
+    "licence",
+    "informatique",
+    "UCBL",
+    "Lyon1",
+    "js",
+    "rest",
+    "nodejs",
+    "web"
+  ],
+  "author": "Romuald THION",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "make-promises-safe": "^5.0.0",
+    "mongoose": "^5.4.20",
+    "serve-favicon": "^2.5.0",
+    "ws": "^6.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-security": "^1.4.0",
+    "prettier": "1.16.4"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.1",
+    "utf-8-validate": "^5.0.2"
+  }
+}

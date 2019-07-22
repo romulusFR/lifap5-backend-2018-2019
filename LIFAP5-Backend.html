@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>LIFAP5 - Projet - documentation backend</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <meta name="keywords" content="LIFAP5, programmation fonctionnelle,Javascript" />
+  <meta name="description" content="Projet de l'UE LIFAP5 - 2018-2019 - UCBL - FST - Informatique" />
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./Projet.css"/>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lifap5---projet-documentation-backend">LIFAP5 - Projet : documentation backend</a><ul>
+<li><a href="#site-lifap5">Site LIFAP5</a></li>
+<li><a href="#dépôt-de-code">Dépôt de code</a></li>
+<li><a href="#todo-prochaine-version">TODO prochaine version</a></li>
+<li><a href="#documentations-de-référence">Documentations de référence</a><ul>
+<li><a href="#mongooose">Mongooose</a></li>
+<li><a href="#boostrap">Boostrap</a></li>
+<li><a href="#nodeexpress">Node/Express</a></li>
+<li><a href="#websockets">WebSockets</a></li>
+<li><a href="#bonnes-pratiques-jsnodeexpress">Bonnes pratiques js/node/express</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#installation-environnement-de-développement">Installation environnement de développement</a><ul>
+<li><a href="#installation-nodejs">Installation Nodejs</a></li>
+<li><a href="#installation-mongodb">Installation Mongodb</a><ul>
+<li><a href="#initialisation-du-replica-set">Initialisation du replica set</a></li>
+</ul></li>
+<li><a href="#scaffolding-initial-express">Scaffolding initial express</a><ul>
+<li><a href="#bibliothèques-utilisées">Bibliothèques utilisées</a></li>
+<li><a href="#installation-lib-node">Installation lib node</a></li>
+</ul></li>
+<li><a href="#création-de-la-base-mongodb">Création de la base <code>mongodb</code></a><ul>
+<li><a href="#initialisation">Initialisation</a></li>
+<li><a href="#pour-exporterimporter">Pour exporter/importer</a></li>
+</ul></li>
+<li><a href="#dockerisation">Dockerisation</a></li>
+</ul></li>
+<li><a href="#test-automatisés-et-debug">Test automatisés et debug</a><ul>
+<li><a href="#mode-debug">Mode debug</a></li>
+<li><a href="#postman">Postman</a><ul>
+<li><a href="#références">Références</a></li>
+</ul></li>
+<li><a href="#jmeter">JMeter</a><ul>
+<li><a href="#références-1">Références</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#déploiement-du-serveur-prod">Déploiement du serveur / prod</a><ul>
+<li><a href="#vérification-du-filtrage">Vérification du filtrage</a></li>
+<li><a href="#configuration-spécifique-proxy-svn">Configuration spécifique (proxy svn)</a></li>
+<li><a href="#crontab-pour-remise-à-zéro-de-la-base">Crontab pour remise à zéro de la base</a></li>
+<li><a href="#front-nginx-tls">Front Nginx / TLS</a><ul>
+<li><a href="#certificats">Certificats</a><ul>
+<li><a href="#certificat-auto-signé">Certificat auto-signé</a></li>
+<li><a href="#certificat-httpsletsencrypt.org-avec-certbot">Certificat <span>https://letsencrypt.org/</span> avec <code>certbot</code></a></li>
+<li><a href="#backup-des-certificats">Backup des certificats</a></li>
+</ul></li>
+<li><a href="#reverse-proxy-nginx">Reverse proxy nginx</a></li>
+<li><a href="#configuration-nginx-tls">Configuration nginx TLS</a></li>
+<li><a href="#configuration-nginx-websocket">Configuration nginx websocket</a></li>
+<li><a href="#visualisation-de-logs">Visualisation de logs</a></li>
+</ul></li>
+<li><a href="#scalabilité-et-performance">Scalabilité et performance</a><ul>
+<li><a href="#lancer">Lancer</a></li>
+<li><a href="#références-2">Références</a><ul>
+<li><a href="#introduction-to-load-balancing-using-node.js">Introduction to Load Balancing Using Node.js</a></li>
+<li><a href="#une-série-de-posts-sur-pm2-httpspm2.iodoc">Une série de posts sur PM2 <span>https://pm2.io/doc/</span></a></li>
+</ul></li>
+<li><a href="#cache-pour-mongoose">Cache pour mongoose</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#expertise-extérieure">Expertise extérieure</a><ul>
+<li><a href="#générales">Générales</a></li>
+<li><a href="#chiffrage-tests-unitaires-inclus">Chiffrage (tests unitaires inclus)</a></li>
+<li><a href="#sur-les-tests">Sur les tests</a></li>
+<li><a href="#génie-logiciel">Génie logiciel</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lifap5---projet-documentation-backend">LIFAP5 - Projet : documentation backend</h1>
+<p>Ce document est le guide de développement et de référence du serveur du projet 2018-2019 de l’unité d’enseignement <a href="https://perso.liris.cnrs.fr/romuald.thion/dokuwiki/doku.php?id=enseignement:lifap5:start">LIFAP5 “Programmation fonctionnelle pour le WEB”</a> en licence 2 informatique UCBL.</p>
+<p>Ce document d’écrit la réalisation d’un serveur REST devant une base Mongo écrit en Node/Express/Mongoose. Un point websocket est aussi offert pour que le client puisse recevoir à la volée les modifications effectuées par les autres utilisateurs.</p>
+<h2 id="site-lifap5">Site LIFAP5</h2>
+<ul>
+<li><a href="https://perso.liris.cnrs.fr/romuald.thion/dokuwiki/doku.php?id=enseignement:lifap5:start" class="uri">https://perso.liris.cnrs.fr/romuald.thion/dokuwiki/doku.php?id=enseignement:lifap5:start</a></li>
+<li><a href="https://perso.liris.cnrs.fr/romuald.thion/files/Enseignement/LIFAP5/Projet-2019P/LIFAP5-2019P-Projet-sujet.html" class="uri">https://perso.liris.cnrs.fr/romuald.thion/files/Enseignement/LIFAP5/Projet-2019P/LIFAP5-2019P-Projet-sujet.html</a></li>
+</ul>
+<h2 id="dépôt-de-code">Dépôt de code</h2>
+<ul>
+<li>Sur github <a href="https://github.com/romulusFR/node-rest-api-lifap5" class="uri">https://github.com/romulusFR/node-rest-api-lifap5</a></li>
+<li>Sur Renater <a href="https://sourcesup.renater.fr/projects/lifap5/" class="uri">https://sourcesup.renater.fr/projects/lifap5/</a> (accès restreint)</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">sudo</span> apt install subversion</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="fu">svn</span> checkout --username rthion https://subversion.renater.fr/lifap5/trunk/Projet</a></code></pre></div>
+<h2 id="todo-prochaine-version">TODO prochaine version</h2>
+<ul>
+<li>Documentation du code <a href="http://usejsdoc.org/" class="uri">http://usejsdoc.org/</a></li>
+<li>Logging : <a href="https://www.npmjs.com/package/winston" class="uri">https://www.npmjs.com/package/winston</a></li>
+<li>Description de l’API : <a href="https://swagger.io/tools/open-source/" class="uri">https://swagger.io/tools/open-source/</a></li>
+<li>Sécurité :
+<ul>
+<li><code>x-api-key</code> hashé en base avec <a href="https://www.npmjs.com/package/bcrypt" class="uri">https://www.npmjs.com/package/bcrypt</a></li>
+<li>&lt;www.passportjs.org&gt;</li>
+</ul></li>
+<li>Séparer topics et posts dans MongoDB</li>
+<li>Pagination des topics et posts</li>
+</ul>
+<h2 id="documentations-de-référence">Documentations de référence</h2>
+<h3 id="mongooose">Mongooose</h3>
+<ul>
+<li><a href="https://mongoosejs.com/docs/guides.html" class="uri">https://mongoosejs.com/docs/guides.html</a></li>
+<li><a href="https://mongoosejs.com/docs/api.html" class="uri">https://mongoosejs.com/docs/api.html</a></li>
+</ul>
+<h3 id="boostrap">Boostrap</h3>
+<ul>
+<li><a href="https://getbootstrap.com/docs/4.3/getting-started/introduction/" class="uri">https://getbootstrap.com/docs/4.3/getting-started/introduction/</a></li>
+</ul>
+<h3 id="nodeexpress">Node/Express</h3>
+<ul>
+<li><a href="https://nodejs.org/docs/latest-v10.x/api/index.html" class="uri">https://nodejs.org/docs/latest-v10.x/api/index.html</a></li>
+<li><a href="https://expressjs.com/en/4x/api.html" class="uri">https://expressjs.com/en/4x/api.html</a></li>
+</ul>
+<h3 id="websockets">WebSockets</h3>
+<ul>
+<li><a href="https://www.npmjs.com/package/ws" class="uri">https://www.npmjs.com/package/ws</a></li>
+<li><a href="https://github.com/websockets/ws/blob/HEAD/doc/ws.md" class="uri">https://github.com/websockets/ws/blob/HEAD/doc/ws.md</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" class="uri">https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API</a></li>
+</ul>
+<h3 id="bonnes-pratiques-jsnodeexpress">Bonnes pratiques js/node/express</h3>
+<ul>
+<li><a href="https://expressjs.com/en/guide/error-handling.html" class="uri">https://expressjs.com/en/guide/error-handling.html</a></li>
+<li><a href="https://expressjs.com/en/advanced/best-practice-performance.html" class="uri">https://expressjs.com/en/advanced/best-practice-performance.html</a></li>
+<li><a href="https://expressjs.com/en/advanced/best-practice-security.html" class="uri">https://expressjs.com/en/advanced/best-practice-security.html</a></li>
+<li><a href="https://github.com/i0natan/nodebestpractices" class="uri">https://github.com/i0natan/nodebestpractices</a></li>
+<li><a href="https://github.com/i0natan/nodebestpractices#6-security-best-practices" class="uri">https://github.com/i0natan/nodebestpractices#6-security-best-practices</a></li>
+</ul>
+<h1 id="installation-environnement-de-développement">Installation environnement de développement</h1>
+<h2 id="installation-nodejs">Installation Nodejs</h2>
+<ul>
+<li><a href="https://github.com/nodesource/distributions#deb" class="uri">https://github.com/nodesource/distributions#deb</a></li>
+<li><a href="https://github.com/nodesource/distributions/blob/master/README.md" class="uri">https://github.com/nodesource/distributions/blob/master/README.md</a></li>
+<li><a href="https://www.npmjs.com/package/npm-check-updates" class="uri">https://www.npmjs.com/package/npm-check-updates</a></li>
+<li><a href="https://www.npmjs.com/package/nodemon" class="uri">https://www.npmjs.com/package/nodemon</a></li>
+<li><a href="https://www.npmjs.com/package/newman" class="uri">https://www.npmjs.com/package/newman</a></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">curl</span> -sL https://deb.nodesource.com/setup_10.x <span class="kw">|</span> <span class="fu">sudo</span> -E bash -  </a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="fu">sudo</span> apt-get install -y nodejs  </a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="ex">npm</span> install -g npm-check-updates</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="ex">npm</span> install -g nodemon  </a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="ex">npm</span> install -g newman</a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="ex">npm</span> install -g pm2</a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="ex">nodejs</span> --version</a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="op">&gt;</span> <span class="ex">v10.15.3</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="ex">nodemon</span>  --version</a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="op">&gt;</span> <span class="ex">1.18.10</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="ex">ncu</span> --version</a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="op">&gt;</span> <span class="ex">3.1.2</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="ex">newman</span> --version</a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="op">&gt;</span> <span class="ex">4.4.1</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="ex">pm2</span> --version</a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="op">&gt;</span> <span class="ex">3.4.1</span></a></code></pre></div>
+<h2 id="installation-mongodb">Installation Mongodb</h2>
+<ul>
+<li><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" class="uri">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/</a></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">sudo</span> apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --keyserver-options http-proxy=http://proxy.univ-lyon1.fr:3128 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="bu">echo</span> <span class="st">&quot;deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse&quot;</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/mongodb-org-4.0.list</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="fu">sudo</span> apt-get update</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="fu">sudo</span> apt-get install -y mongodb-org</a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="fu">sudo</span> service mongod start</a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="ex">mongo</span> --version</a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="op">&gt;</span> <span class="ex">MongoDB</span> shell version v4.0.7</a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="ex">mongod</span> --version</a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="op">&gt;</span> <span class="ex">db</span> version v4.0.7</a></code></pre></div>
+<h3 id="initialisation-du-replica-set">Initialisation du replica set</h3>
+<p>Pour permettre de suivre en live les màj sur le serveur. Voir :</p>
+<ul>
+<li><a href="https://docs.mongodb.com/manual/replication/" class="uri">https://docs.mongodb.com/manual/replication/</a></li>
+<li><a href="https://docs.mongodb.com/manual/changeStreams/" class="uri">https://docs.mongodb.com/manual/changeStreams/</a></li>
+<li><a href="https://docs.mongodb.com/manual/reference/change-events/" class="uri">https://docs.mongodb.com/manual/reference/change-events/</a></li>
+</ul>
+<p>Dans <code>/etc/mongod.conf</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">replication:</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="fu">replSetName:</span><span class="at"> </span><span class="st">&quot;replica-local&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="op">&gt;</span> <span class="va">rs</span>.<span class="at">initiate</span>()</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="op">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="st">&quot;info2&quot;</span> <span class="op">:</span> <span class="st">&quot;no configuration specified. Using a default configuration for the set&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="st">&quot;me&quot;</span> <span class="op">:</span> <span class="st">&quot;127.0.0.1:27017&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="st">&quot;ok&quot;</span> <span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-6" title="6">  <span class="st">&quot;operationTime&quot;</span> <span class="op">:</span> <span class="at">Timestamp</span>(<span class="dv">1554897388</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-7" title="7">  <span class="st">&quot;$clusterTime&quot;</span> <span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="st">&quot;clusterTime&quot;</span> <span class="op">:</span> <span class="at">Timestamp</span>(<span class="dv">1554897388</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-9" title="9">    <span class="st">&quot;signature&quot;</span> <span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-10" title="10">      <span class="st">&quot;hash&quot;</span> <span class="op">:</span> <span class="at">BinData</span>(<span class="dv">0</span><span class="op">,</span><span class="st">&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-11" title="11">      <span class="st">&quot;keyId&quot;</span> <span class="op">:</span> <span class="at">NumberLong</span>(<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-12" title="12">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-13" title="13">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="op">}</span></a></code></pre></div>
+<h2 id="scaffolding-initial-express">Scaffolding initial express</h2>
+<ul>
+<li><a href="https://codeburst.io/writing-a-crud-app-with-node-js-and-mongodb-e0827cbbdafb">Exemple de départ</a></li>
+<li>Voir des outils comme <a href="https://yeoman.io/" class="uri">https://yeoman.io/</a></li>
+</ul>
+<h3 id="bibliothèques-utilisées">Bibliothèques utilisées</h3>
+<ul>
+<li><a href="http://expressjs.com/" class="uri">http://expressjs.com/</a></li>
+<li><a href="https://mongoosejs.com/" class="uri">https://mongoosejs.com/</a></li>
+<li><a href="https://www.npmjs.com/package/body-parser" class="uri">https://www.npmjs.com/package/body-parser</a></li>
+<li><a href="https://www.npmjs.com/package/debug" class="uri">https://www.npmjs.com/package/debug</a></li>
+<li><a href="https://www.npmjs.com/package/cors" class="uri">https://www.npmjs.com/package/cors</a></li>
+<li><a href="https://www.npmjs.com/package/helmet" class="uri">https://www.npmjs.com/package/helmet</a></li>
+<li><a href="https://www.npmjs.com/package/ws" class="uri">https://www.npmjs.com/package/ws</a></li>
+<li><a href="https://www.npmjs.com/package/serve-favicon" class="uri">https://www.npmjs.com/package/serve-favicon</a></li>
+<li><a href="https://www.npmjs.com/package/eslint" class="uri">https://www.npmjs.com/package/eslint</a></li>
+<li><a href="https://www.npmjs.com/package/eslint-config-eslint" class="uri">https://www.npmjs.com/package/eslint-config-eslint</a></li>
+<li><a href="https://www.npmjs.com/package/eslint-plugin-node" class="uri">https://www.npmjs.com/package/eslint-plugin-node</a></li>
+<li><a href="https://www.npmjs.com/package/eslint-plugin-security" class="uri">https://www.npmjs.com/package/eslint-plugin-security</a></li>
+</ul>
+<h3 id="installation-lib-node">Installation lib node</h3>
+<p>Dans dossier <a href="./backend"><code>./backend</code></a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">npm</span> init</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="ex">npm</span> install --save mongoose</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="ex">npm</span> install --save express</a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="ex">npm</span> install --save body-parser</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="ex">npm</span> install --save cors</a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="ex">npm</span> install --save helmet</a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="ex">npm</span> install --save serve-favicon</a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="ex">npm</span> install --save ws</a>
+<a class="sourceLine" id="cb6-11" title="11"></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="ex">npm</span> install --save debug</a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="ex">npm</span> install --save make-promises-safe</a>
+<a class="sourceLine" id="cb6-14" title="14"></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="ex">npm</span> install --save-dev eslint-plugin-security</a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="ex">npm</span> install --save-dev eslint-plugin-node</a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="ex">npm</span> install --save-dev eslint-config-eslint</a>
+<a class="sourceLine" id="cb6-18" title="18"></a>
+<a class="sourceLine" id="cb6-19" title="19"></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="ex">npm</span> audit fix</a></code></pre></div>
+<h2 id="création-de-la-base-mongodb">Création de la base <code>mongodb</code></h2>
+<h3 id="initialisation">Initialisation</h3>
+<ul>
+<li>Pour générer les clefs d’API <code>gen-api-keys.py file-ids.tsv file-keys.tsv</code></li>
+<li>Voir script <code>install-mongo-tsv.sh</code></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">mongo</span> lifap5-backend --eval <span class="st">&quot;db.users.findOne()&quot;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="ex">mongo</span> lifap5-backend --eval <span class="st">&quot;db.users.find({login : &#39;test&#39;})&quot;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="ex">mongo</span> lifap5-backend --eval <span class="st">&quot;db.topics.findOne()&quot;</span></a></code></pre></div>
+<h3 id="pour-exporterimporter">Pour exporter/importer</h3>
+<ul>
+<li>Voir script <code>install-mongo.sh</code> pour l’import</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">mongoexport</span> --db=lifap5-backend --collection=topics --pretty --jsonArray  <span class="op">&gt;</span> Projet-2019-topics.json</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="ex">mongoexport</span> --db=lifap5-backend --collection=users --pretty --jsonArray <span class="op">&gt;</span> Projet-2019-users-full.json</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="ex">mongoexport</span> --db=lifap5-backend --collection=users --pretty --jsonArray --fields=login,_id,joined_on <span class="op">&gt;</span> Projet-2019-users.json</a></code></pre></div>
+<h2 id="dockerisation">Dockerisation</h2>
+<ul>
+<li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository" class="uri">https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository</a></li>
+<li><a href="https://docs.docker.com/install/linux/linux-postinstall/" class="uri">https://docs.docker.com/install/linux/linux-postinstall/</a></li>
+</ul>
+<p>Voir fichiers</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/install/" class="uri">https://docs.docker.com/compose/install/</a></li>
+<li><a href="https://nodejs.org/de/docs/guides/nodejs-docker-webapp/" class="uri">https://nodejs.org/de/docs/guides/nodejs-docker-webapp/</a></li>
+<li>Images mongo/node
+<ul>
+<li><a href="https://hub.docker.com/_/mongo" class="uri">https://hub.docker.com/_/mongo</a></li>
+<li><a href="https://hub.docker.com/_/node" class="uri">https://hub.docker.com/_/node</a></li>
+</ul></li>
+<li><a href="https://docs.docker.com/compose/startup-order/" class="uri">https://docs.docker.com/compose/startup-order/</a>
+<ul>
+<li><a href="https://github.com/vishnubob/wait-for-it" class="uri">https://github.com/vishnubob/wait-for-it</a></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="fu">sudo</span> curl -L <span class="st">&quot;https://github.com/docker/compose/releases/download/1.24.0/docker-compose-</span><span class="va">$(</span><span class="fu">uname</span> -s<span class="va">)</span><span class="st">-</span><span class="va">$(</span><span class="fu">uname</span> -m<span class="va">)</span><span class="st">&quot;</span> -o /usr/local/bin/docker-compose</a></code></pre></div>
+<p>Commandes de base</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">docker</span> images</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">docker</span> system df</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="ex">docker-compose</span> build</a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="ex">docker</span> exec -it projet_mongo_1 mongo -u root -p <span class="st">&#39;lifap5-backend-2018&#39;</span> --authenticationDatabase admin lifap5-backend</a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="ex">docker</span> exec -it projet_mongo_1 pwd</a></code></pre></div>
+<h1 id="test-automatisés-et-debug">Test automatisés et debug</h1>
+<h2 id="mode-debug">Mode debug</h2>
+<ul>
+<li><code>DEBUG=lifap5:*</code> pour activer le module <code>debug</code></li>
+<li>Le flag active aussi le debug de <code>mongoose</code></li>
+<li>Mis dans les scripts <code>dev</code> de <code>package.json</code> qui utilise <code>nodemon</code></li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="ex">npm</span> run start:dev</a></code></pre></div>
+<h2 id="postman">Postman</h2>
+<p>Dans dossier <a href="./tests"><code>./tests</code></a></p>
+<ul>
+<li>plan de test <code>lifap5-backend.postman_collection.json</code></li>
+<li>variables d’environnement <code>lifap5-backend-env.postman_environment.json</code></li>
+<li>script de lancement avec <a href="https://github.com/postmanlabs/newman" class="uri">https://github.com/postmanlabs/newman</a> dans la target <code>test</code> de <code>./backend/package.json</code></li>
+</ul>
+<h3 id="références">Références</h3>
+<ul>
+<li><a href="https://learning.getpostman.com/docs/postman/scripts/test_scripts/" class="uri">https://learning.getpostman.com/docs/postman/scripts/test_scripts/</a></li>
+<li><a href="https://learning.getpostman.com/docs/postman/scripts/test_examples" class="uri">https://learning.getpostman.com/docs/postman/scripts/test_examples</a></li>
+<li><a href="https://learning.getpostman.com/docs/postman/environments_and_globals/variables" class="uri">https://learning.getpostman.com/docs/postman/environments_and_globals/variables</a></li>
+</ul>
+<h2 id="jmeter">JMeter</h2>
+<p>Dans dossier <a href="./tests"><code>./tests</code></a></p>
+<ul>
+<li>plan de test <a href="https://jmeter.apache.org/" class="uri">https://jmeter.apache.org/</a> <code>lifap5-jmeter-testplan.jmx</code></li>
+<li>script de lancement <code>./jmeter-test.sh</code></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">Creating</span> summariser <span class="op">&lt;</span>summary<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ex">Created</span> the tree successfully using ./lifap5-jmeter-testplan.jmx</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="ex">Starting</span> the test @ Tue Apr 02 14:39:29 CEST 2019 (1554208769052)</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="ex">Waiting</span> for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445</a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="ex">summary</span> +      1 in 00:00:01 =    1.1/s Avg:   462 Min:   462 Max:   462 Err:     0 (0.00%) <span class="ex">Active</span>: 15 Started: 15 Finished: 0</a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="ex">summary</span> +   6573 in 00:00:30 =  218.6/s Avg:   338 Min:    49 Max:  2048 Err:    37 (0.56%) <span class="ex">Active</span>: 54 Started: 80 Finished: 26</a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="ex">summary</span> +   4681 in 00:00:30 =  156.8/s Avg:   262 Min:    32 Max:  1205 Err:    24 (0.51%) <span class="ex">Active</span>: 39 Started: 80 Finished: 41</a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="ex">summary</span> =  11255 in 00:01:01 =  185.0/s Avg:   307 Min:    32 Max:  2048 Err:    61 (0.54%)</a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="ex">summary</span> +   4463 in 00:00:30 =  148.5/s Avg:   206 Min:    14 Max:  1404 Err:    16 (0.36%) <span class="ex">Active</span>: 13 Started: 80 Finished: 67</a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="ex">summary</span> +    484 in 00:00:03 =  188.6/s Avg:    44 Min:     2 Max:   325 Err:     0 (0.00%) <span class="ex">Active</span>: 0 Started: 80 Finished: 80</a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="ex">summary</span> =  16202 in 00:01:33 =  173.4/s Avg:   271 Min:     2 Max:  2048 Err:    77 (0.48%)</a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="ex">Tidying</span> up ...    @ Tue Apr 02 14:41:02 CEST 2019 (1554208862638)</a></code></pre></div>
+<h3 id="références-1">Références</h3>
+<p><a href="https://octoperf.com/blog/2018/03/29/jmeter-tutorial/#random-behavior" class="uri">https://octoperf.com/blog/2018/03/29/jmeter-tutorial/#random-behavior</a></p>
+<h1 id="déploiement-du-serveur-prod">Déploiement du serveur / prod</h1>
+<ul>
+<li>Cible : <a href="https://lifap5.univ-lyon1.fr:443" class="uri">https://lifap5.univ-lyon1.fr:443</a></li>
+<li>Connexion : voir <a href="./connect-server-prod.sh"><code>connect-server-prod.sh</code></a></li>
+</ul>
+<p>Au cas où :</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="fu">sudo</span> chown -R <span class="va">$USER</span>:<span class="va">$(</span><span class="fu">id</span> -gn <span class="va">$USER)</span> /home/ubuntu/.config</a></code></pre></div>
+<h2 id="vérification-du-filtrage">Vérification du filtrage</h2>
+<p>Depuis une IP du campus</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="fu">nmap</span> -P0 -p22,80,443,8080,8443,27017-27019,3389,3000 lifap5.univ-lyon1.fr</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="ex">Starting</span> Nmap 7.60 ( https://nmap.org ) <span class="ex">at</span> 2019-04-04 14:06 CEST</a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="ex">Nmap</span> scan report for lifap5.univ-lyon1.fr (192.168.74.8)</a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="ex">Host</span> is up (0.00078s latency)<span class="ex">.</span></a>
+<a class="sourceLine" id="cb14-6" title="6"></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="ex">PORT</span>      STATE    SERVICE</a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="ex">22/tcp</span>    open     ssh</a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="ex">80/tcp</span>    open     http</a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="ex">443/tcp</span>   open     https</a>
+<a class="sourceLine" id="cb14-11" title="11"><span class="ex">3000/tcp</span>  filtered ppp</a>
+<a class="sourceLine" id="cb14-12" title="12"><span class="ex">3389/tcp</span>  closed   ms-wbt-server</a>
+<a class="sourceLine" id="cb14-13" title="13"><span class="ex">8080/tcp</span>  closed   http-proxy</a>
+<a class="sourceLine" id="cb14-14" title="14"><span class="ex">8443/tcp</span>  closed   https-alt</a>
+<a class="sourceLine" id="cb14-15" title="15"><span class="ex">27017/tcp</span> filtered mongod</a>
+<a class="sourceLine" id="cb14-16" title="16"><span class="ex">27018/tcp</span> filtered mongod</a>
+<a class="sourceLine" id="cb14-17" title="17"><span class="ex">27019/tcp</span> filtered mongod</a></code></pre></div>
+<h2 id="configuration-spécifique-proxy-svn">Configuration spécifique (proxy svn)</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="ex">edit</span> ~/.subversion/servers</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="op">&gt;</span> [<span class="ex">global</span>]</a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="op">&gt;</span> <span class="ex">http-proxy-host</span> = proxy.univ-lyon1.fr</a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="op">&gt;</span> <span class="ex">http-proxy-port</span> = 3128</a></code></pre></div>
+<h2 id="crontab-pour-remise-à-zéro-de-la-base">Crontab pour remise à zéro de la base</h2>
+<p>Ajouter avec <code>crontab -e</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1"><span class="ex">crontab</span> -l</a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="op">&gt;</span> <span class="ex">42</span> * * * * mongoimport --uri mongodb://localhost:27017/lifap5-backend --collection topics --drop --jsonArray --type json --file /home/ubuntu/lifap5-projet/mongodb/Projet-2019-topics.json</a></code></pre></div>
+<h2 id="front-nginx-tls">Front Nginx / TLS</h2>
+<h3 id="certificats">Certificats</h3>
+<h4 id="certificat-auto-signé">Certificat auto-signé</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"><span class="ex">openssl</span> req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365</a></code></pre></div>
+<h4 id="certificat-httpsletsencrypt.org-avec-certbot">Certificat <a href="https://letsencrypt.org/" class="uri">https://letsencrypt.org/</a> avec <code>certbot</code></h4>
+<ul>
+<li><a href="https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca" class="uri">https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca</a></li>
+<li><a href="https://certbot.eff.org/lets-encrypt/ubuntubionic-other" class="uri">https://certbot.eff.org/lets-encrypt/ubuntubionic-other</a></li>
+<li><a href="https://stackoverflow.com/questions/48078083/lets-encrypt-ssl-couldnt-start-by-error-eacces-permission-denied-open-et" class="uri">https://stackoverflow.com/questions/48078083/lets-encrypt-ssl-couldnt-start-by-error-eacces-permission-denied-open-et</a></li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="fu">sudo</span> addgroup nodecert</a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="fu">sudo</span> adduser ubuntu nodecert</a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="fu">sudo</span> adduser root nodecert</a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="fu">sudo</span> chgrp -R nodecert /etc/letsencrypt/live</a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="fu">sudo</span> chgrp -R nodecert /etc/letsencrypt/archive</a>
+<a class="sourceLine" id="cb18-7" title="7"></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="fu">sudo</span> chmod 710 /etc/letsencrypt/live</a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="fu">sudo</span> chmod 710 /etc/letsencrypt/archive</a>
+<a class="sourceLine" id="cb18-10" title="10"></a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="fu">sudo</span> chmod 640 /etc/letsencrypt/archive/lifap5.univ-lyon1.fr/privkey1.pem</a></code></pre></div>
+<h4 id="backup-des-certificats">Backup des certificats</h4>
+<ul>
+<li><a href="https://community.letsencrypt.org/t/best-way-to-backup-letsencrypt-folder/21551/2" class="uri">https://community.letsencrypt.org/t/best-way-to-backup-letsencrypt-folder/21551/2</a></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="fu">tar</span> zcvf /tmp/letsencrypt_backup_<span class="va">$(</span><span class="fu">date</span> +<span class="st">&#39;%Y-%m-%d_%H%M&#39;</span><span class="va">)</span>.tar.gz /etc/letsencrypt</a></code></pre></div>
+<h3 id="reverse-proxy-nginx">Reverse proxy nginx</h3>
+<ul>
+<li>Référence <a href="https://docs.nginx.com/nginx/deployment-guides/node-js-load-balancing-nginx-plus/" class="uri">https://docs.nginx.com/nginx/deployment-guides/node-js-load-balancing-nginx-plus/</a> (dont un benchmark de perf)</li>
+<li><a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/" class="uri">https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/</a></li>
+<li><a href="https://serverfault.com/questions/768509/lets-encrypt-with-an-nginx-reverse-proxy" class="uri">https://serverfault.com/questions/768509/lets-encrypt-with-an-nginx-reverse-proxy</a></li>
+<li><a href="https://medium.com/intrinsic/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca" class="uri">https://medium.com/intrinsic/why-should-i-use-a-reverse-proxy-if-node-js-is-production-ready-5a079408b2ca</a></li>
+</ul>
+<h3 id="configuration-nginx-tls">Configuration nginx TLS</h3>
+<ul>
+<li><a href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#prebuilt_ubuntu" class="uri">https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#prebuilt_ubuntu</a></li>
+<li>Voir config <a href="https://www.nginx.com/resource/conf/nodejs-basic.conf" class="uri">https://www.nginx.com/resource/conf/nodejs-basic.conf</a></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" title="1"><span class="ex">nginx</span> -v</a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="op">&gt;</span> <span class="ex">nginx</span> version: nginx/1.15.10</a>
+<a class="sourceLine" id="cb20-3" title="3"></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="fu">sudo</span> adduser nginx nodecert</a>
+<a class="sourceLine" id="cb20-5" title="5"></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="fu">sudo</span> nginx -T</a></code></pre></div>
+<ul>
+<li>Voir la configuration dans <a href="./production"><code>production</code></a> sauvegardée avec le script <code>backup-nginx-conf.sh</code></li>
+<li>Voir <a href="https://cipherli.st/" class="uri">https://cipherli.st/</a> et <a href="https://www.ssi.gouv.fr/administration/guide/recommandations-de-securite-relatives-a-tls/" class="uri">https://www.ssi.gouv.fr/administration/guide/recommandations-de-securite-relatives-a-tls/</a> pour les bonnes pratiques SSL</li>
+</ul>
+<p>Voir les résultats sur</p>
+<ul>
+<li><a href="https://www.ssllabs.com/ssltest/analyze.html?d=lifap5.univ-lyon1.fr" class="uri">https://www.ssllabs.com/ssltest/analyze.html?d=lifap5.univ-lyon1.fr</a></li>
+<li>ou avec <a href="https://testssl.sh/" class="uri">https://testssl.sh/</a></li>
+</ul>
+<h3 id="configuration-nginx-websocket">Configuration nginx websocket</h3>
+<ul>
+<li><a href="https://www.nginx.com/blog/websocket-nginx/" class="uri">https://www.nginx.com/blog/websocket-nginx/</a></li>
+</ul>
+<pre class="nginx"><code>location /stream/ {
+    include /etc/nginx/conf.d/proxy_set_header.inc;
+    proxy_pass http://nodejs;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection &quot;upgrade&quot;;
+}</code></pre>
+<h3 id="visualisation-de-logs">Visualisation de logs</h3>
+<ul>
+<li>Pour la conversion de format <a href="https://github.com/stockrt/nginx2goaccess" class="uri">https://github.com/stockrt/nginx2goaccess</a></li>
+<li>Outils de visu <a href="https://goaccess.io/" class="uri">https://goaccess.io/</a></li>
+</ul>
+<h2 id="scalabilité-et-performance">Scalabilité et performance</h2>
+<ul>
+<li><a href="https://pm2.io/doc/en/runtime/overview/" class="uri">https://pm2.io/doc/en/runtime/overview/</a></li>
+<li><code>NODE_ENV=production</code> pour la production</li>
+<li>Mis dans le script <code>dev:prod</code> de <code>package.json</code></li>
+<li>Mis dans le fichier <code>ecosystem.config.js</code></li>
+</ul>
+<h3 id="lancer">Lancer</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" title="1"><span class="ex">pm2</span> start --env local</a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="ex">pm2</span> ls</a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4">┌─────────────┬────┬─────────┬─────────┬───────┬────────┬─────────┬────────┬──────┬───────────┬────────┬──────────┐</a>
+<a class="sourceLine" id="cb22-5" title="5">│ <span class="ex">App</span> name    │ id │ version │ mode    │ pid   │ status │ restart │ uptime │ cpu  │ mem       │ user   │ watching │</a>
+<a class="sourceLine" id="cb22-6" title="6">├─────────────┼────┼─────────┼─────────┼───────┼────────┼─────────┼────────┼──────┼───────────┼────────┼──────────┤</a>
+<a class="sourceLine" id="cb22-7" title="7">│ <span class="ex">lifap5-prod</span> │ 0  │ 1.0.2   │ cluster │ 13687 │ online │ 2       │ 2h     │ 0.4% │ 64.8 MB   │ ubuntu │ disabled │</a>
+<a class="sourceLine" id="cb22-8" title="8">│ <span class="ex">lifap5-prod</span> │ 1  │ 1.0.2   │ cluster │ 13700 │ online │ 2       │ 2h     │ 0.4% │ 63.8 MB   │ ubuntu │ disabled │</a>
+<a class="sourceLine" id="cb22-9" title="9">└─────────────┴────┴─────────┴─────────┴───────┴────────┴─────────┴────────┴──────┴───────────┴────────┴──────────┘</a>
+<a class="sourceLine" id="cb22-10" title="10"></a>
+<a class="sourceLine" id="cb22-11" title="11"><span class="ex">pm2</span> logs</a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="ex">pm2</span> monit</a></code></pre></div>
+<h3 id="références-2">Références</h3>
+<h4 id="introduction-to-load-balancing-using-node.js">Introduction to Load Balancing Using Node.js</h4>
+<ul>
+<li><a href="https://mazira.com/blog/introduction-load-balancing-nodejs" class="uri">https://mazira.com/blog/introduction-load-balancing-nodejs</a></li>
+<li><a href="https://mazira.com/blog/introduction-load-balancing-nodejs-2" class="uri">https://mazira.com/blog/introduction-load-balancing-nodejs-2</a></li>
+</ul>
+<h4 id="une-série-de-posts-sur-pm2-httpspm2.iodoc">Une série de posts sur PM2 <a href="https://pm2.io/doc/" class="uri">https://pm2.io/doc/</a></h4>
+<ol type="1">
+<li><a href="https://www.acuriousanimal.com/2017/08/12/understanding-the-nodejs-cluster-module" class="uri">https://www.acuriousanimal.com/2017/08/12/understanding-the-nodejs-cluster-module</a></li>
+<li><a href="https://www.acuriousanimal.com/2017/08/18/using-cluster-module-with-http-servers" class="uri">https://www.acuriousanimal.com/2017/08/18/using-cluster-module-with-http-servers</a></li>
+<li><a href="https://www.acuriousanimal.com/2017/08/20/using-pm2-to-manage-cluster.html" class="uri">https://www.acuriousanimal.com/2017/08/20/using-pm2-to-manage-cluster.html</a></li>
+<li><a href="https://www.acuriousanimal.com/2017/08/27/graceful-shutdown-node-processes" class="uri">https://www.acuriousanimal.com/2017/08/27/graceful-shutdown-node-processes</a></li>
+</ol>
+<h3 id="cache-pour-mongoose">Cache pour mongoose</h3>
+<p>A priori, pas vraiment utile ici</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/cachegoose" class="uri">https://www.npmjs.com/package/cachegoose</a></li>
+</ul>
+<h1 id="expertise-extérieure">Expertise extérieure</h1>
+<h2 id="générales">Générales</h2>
+<ul>
+<li>Alternatives à express
+<ul>
+<li><a href="https://www.fastify.io/" class="uri">https://www.fastify.io/</a></li>
+<li><a href="https://hapijs.com/" class="uri">https://hapijs.com/</a></li>
+</ul></li>
+<li>Configuration ESLINT : séparer le guide de style du reste
+<ul>
+<li><a href="https://standardjs.com/" class="uri">https://standardjs.com/</a></li>
+<li><a href="https://github.com/prettier/prettier" class="uri">https://github.com/prettier/prettier</a></li>
+</ul></li>
+<li><em>foreign key</em> mongo
+<ul>
+<li><a href="https://mongoosejs.com/docs/api.html#schematype_SchemaType-ref" class="uri">https://mongoosejs.com/docs/api.html#schematype_SchemaType-ref</a></li>
+</ul></li>
+<li>Passer des promesses à async/await
+<ul>
+<li>Voir <a href="https://www.npmjs.com/package/express-promise-router" class="uri">https://www.npmjs.com/package/express-promise-router</a></li>
+</ul></li>
+<li>Dev avec container docker pour node :
+<ul>
+<li>partager un volume avec le container</li>
+<li><a href="https://docs.docker.com/compose/compose-file/#volumes" class="uri">https://docs.docker.com/compose/compose-file/#volumes</a></li>
+</ul></li>
+</ul>
+<h2 id="chiffrage-tests-unitaires-inclus">Chiffrage (tests unitaires inclus)</h2>
+<ul>
+<li>Setup tooling/esling : 2 j.h.</li>
+<li>Fonctionnel :
+<ul>
+<li>authentification : 1 j.h</li>
+<li>crud post/topics : 2 j.h</li>
+</ul></li>
+<li>Montage/infra (mongo, nginx) : 3 j.h</li>
+</ul>
+<h2 id="sur-les-tests">Sur les tests</h2>
+<ul>
+<li>Framework de tests
+<ul>
+<li><a href="https://jestjs.io/" class="uri">https://jestjs.io/</a></li>
+<li><a href="https://www.npmjs.com/package/power-assert" class="uri">https://www.npmjs.com/package/power-assert</a></li>
+</ul></li>
+<li>Test <em>postman</em> : plus haut niveau que unitaires : intégration
+<ul>
+<li>Définition du type de test : si “pas besoin de bouchon”, alors c’est un test d’intégration</li>
+<li>Si on ne sait pas comment tester, c’est que le génie logiciel est mal organisé</li>
+</ul></li>
+</ul>
+<h2 id="génie-logiciel">Génie logiciel</h2>
+<ul>
+<li>Le contrôleur ne devrait pas dépendre de la couche de routage http
+<ul>
+<li>ne devrait donc pas avoir <code>(req, res, next)</code> en paramètre, juste le métier</li>
+<li>typiquement, le métier est intestable au niveau unitaire</li>
+<li>introduire une indirection entre la route express et le métier</li>
+</ul></li>
+<li>Pagination : “standard” pour une application pro</li>
+</ul>
+</body>
+</html>

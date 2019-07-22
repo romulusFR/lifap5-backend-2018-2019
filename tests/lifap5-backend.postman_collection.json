@@ -1,0 +1,3706 @@
+{
+	"info": {
+		"_postman_id": "2790da1c-cf69-4cda-a202-38e8df5ef692",
+		"name": "lifap5-backend",
+		"description": "Tests pour backend projet 2018-2019\n\nPlease setup mongo db with \"./mongodb/install-mongo-tsv.sh\" before running test suite\nThe \"topics\" colelction can be empty but the \"users\" collection CANNOT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User routes",
+			"item": [
+				{
+					"name": "/user/ (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01b3e0c0-0e2d-46a3-beee-a30ee9c5bc7a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('array');",
+									"});",
+									" ",
+									"pm.test(\"User includes {{login-test}}\", function () {",
+									"    pm.expect(jsonData).to.includes(login_test);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/user/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/ : test plural",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01b3e0c0-0e2d-46a3-beee-a30ee9c5bc7a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('array');",
+									"});",
+									" ",
+									"pm.test(\"User includes {{login-test}}\", function () {",
+									"    pm.expect(jsonData).to.includes(login_test);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/users/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "21e8517c-b49a-4f75-b61b-e3d3f4d175fb",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Login is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.login).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has joined_on\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.joined_on))).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"JSON object has _id\", function () {",
+									"    pm.expect(jsonData).to.have.property('_id');",
+									"});",
+									" ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a2fad951-5660-41b2-85ad-48d84be69c32",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/user/{{login-test}}?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"user",
+								"{{login-test}}"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:login : non existent (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "21e8517c-b49a-4f75-b61b-e3d3f4d175fb",
+								"exec": [
+									"pm.test(\"Status is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchUser\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message');",
+									"     pm.expect(jsonData.message).is.not.empty;",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9e193b8c-d403-46ee-bd88-95e83240948a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/user/non-existent",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"user",
+								"non-existent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/whoami : OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "502d90d4-d5ee-4109-866f-8df64d28ec03",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"let apikey_test = pm.environment.get(\"x-api-key-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"pm.test(\"Login is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.login).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"Login is {{x-api-key-test}}\", function () {",
+									"    pm.expect(jsonData.apikey).to.eql(apikey_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has joined_on\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.joined_on))).to.be.true;",
+									"});",
+									"",
+									"pm.test(\"JSON object has _id\", function () {",
+									"    pm.expect(jsonData).to.have.property('_id');",
+									"});",
+									" ",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d105302b-2b44-4887-af41-d0ae139b7dfd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key-test}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/user/whoami",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"user",
+								"whoami"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/whoami : no x-api-key (401)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6257b46-eeb9-4144-8b3a-400978c8da43",
+								"exec": [
+									"pm.test(\"Status is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Error is NoX-Api-KeyProvided\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoX-Api-KeyProvided\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message');",
+									"     pm.expect(jsonData.message).is.not.empty;",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/user/whoami",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"user",
+								"whoami"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/whoami : invalid x-api-key (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae55e806-94fb-48cb-b67f-b877b1656487",
+								"exec": [
+									"pm.test(\"Status is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Error is NoSuchX-Api-Key\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchX-Api-Key\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message');",
+									"     pm.expect(jsonData.message).is.not.empty;",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "non-existent-api-key"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/user/whoami",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"user",
+								"whoami"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Topic routes",
+			"item": [
+				{
+					"name": "/topic/create (SET ENV VAR topic-id-other)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7757ac1-a8f3-4bb3-8185-ffead29a0198",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_other = pm.environment.get(\"login-other\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"topic-id-other\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-other}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_other);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean');",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData.posts).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-other}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description : {{$randomInt}}\",\n    \"date\":null,\n    \"user\":null,\n    \"posts\" : [42]\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/create?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"create"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/create (SET ENV VAR topic-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7757ac1-a8f3-4bb3-8185-ffead29a0198",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"topic-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData.posts).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description : {{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/create?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"create"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/create : invalid schema (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e1ca4a2-bd97-4b36-b71c-99f7268d027e",
+								"exec": [
+									"pm.test(\"Status is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"ValidationError\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message');",
+									"     pm.expect(jsonData.message).is.not.empty;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/create?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"create"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/create : not authenticated (401)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e1ca4a2-bd97-4b36-b71c-99f7268d027e",
+								"exec": [
+									"pm.test(\"Status is 400\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoX-Api-KeyProvided\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message');",
+									"     pm.expect(jsonData.message).is.not.empty;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/create?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"create"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/ (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26b16e85-2ade-4046-ac3a-0e23a3d4f9cc",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('array');",
+									"});",
+									" ",
+									"pm.test(\"User includes {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData).to.deep.includes({_id : topic_id_test, user : login_test});",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topics/ : test plural",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26b16e85-2ade-4046-ac3a-0e23a3d4f9cc",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('array');",
+									"});",
+									" ",
+									"pm.test(\"User includes {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData).to.deep.includes({_id : topic_id_test, user : login_test});",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topics/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topics",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data has user {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData).to.not.have.property('posts');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id : non-existent OID (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33cec9e9-883b-429a-a584-39b73f45753f",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchTopic\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/5c9b9f391e7f31fcc8814608",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"5c9b9f391e7f31fcc8814608"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id : invalid OID (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "964272ea-68b0-47fa-9028-2a1f99162ad0",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"CastError\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									"",
+									"pm.test(\"Error has _id path\", function () {",
+									"     pm.expect(jsonData).to.have.property('path').that.is.eql('_id')",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/invalid-OID",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"invalid-OID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data has user {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData).to.have.property('posts');",
+									"});",
+									"",
+									"pm.test(\"JSON data modified topic\", function () {",
+									"    pm.expect(jsonData.topic).to.eql(\"modified\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key-test}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"topic\": \"modified\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/update",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/update : field not modified (200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data STILL has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data STILL has user {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData).to.have.property('posts').that.does.not.includes(42);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\": \"{{topic-id-other}}\",\n\t\"user\": \"{{login-other}}\",\n\t\"posts\" : [42],\n\t\"date\" : 0\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/update",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/update : not mine (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoOwnership\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoOwnership\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key-test}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"topic\": \"modified\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-other}}/update",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-other}}",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/clopen : closes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data modified open\", function () {",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(false);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/clopen",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"clopen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/clopen : opens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data modified open\", function () {",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/clopen",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"clopen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/clopen : not mine (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoOwnership\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-other}}/clopen",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-other}}",
+								"clopen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/delete : not mine (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d25f7bab-c646-4deb-a5f3-8a2c74b46869",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoOwnership\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoOwnership\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-other}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-other}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/test : non existent OID (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33cec9e9-883b-429a-a584-39b73f45753f",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchTopic\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key-test}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/5c9b9f391e7f31fcc8814608/delete/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"5c9b9f391e7f31fcc8814608",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/delete (UNSET ENV VAR topic-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d25f7bab-c646-4deb-a5f3-8a2c74b46869",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.unset(\"topic-id-test\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/delete (UNSET ENV VAR topic-id-other)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d25f7bab-c646-4deb-a5f3-8a2c74b46869",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.unset(\"topic-id-other\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-other}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-other}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-other}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/delete-all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0010b796-620e-42de-a08a-affac7ee151d",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"    ",
+									"",
+									"pm.test(\"OK is 1\", function () {",
+									"    pm.expect(jsonData.ok).to.eql(1);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topics/delete-all?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topics",
+								"delete-all"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post routes",
+			"item": [
+				{
+					"name": "/topic/create (SET ENV VAR topic-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7757ac1-a8f3-4bb3-8185-ffead29a0198",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"topic-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData.posts).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description : {{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/create?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"create"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/create (SET ENV VAR post-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de082f9e-6923-4712-85e3-57df40a73076",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"post-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.is.empty;",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"test post {{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/create",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/create (SET ENV VAR post-id-other)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de082f9e-6923-4712-85e3-57df40a73076",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_other = pm.environment.get(\"login-other\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"post-id-other\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_other);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.is.empty;",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-other}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"test post {{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/create",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/create : fields not used",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de082f9e-6923-4712-85e3-57df40a73076",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.is.empty;",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"test post 1\",\n    \"likers\" :  [\"unknown.user\"],\n    \"dislikers\" : [\"unknown.user\"],\n    \"user\" : \"unknown.user\",\n    \"date\" : null\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/create",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/ (all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2b95de72-c302-4a5c-8c85-80763ab7ca30",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let post_id_test = pm.environment.get(\"post-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"let post_id_other = pm.environment.get(\"post-id-other\");",
+									"let login_other = pm.environment.get(\"login-other\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('array');",
+									"});",
+									" ",
+									"pm.test(\"User includes {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData.map(x => ({_id : x._id, user : x.user}))).to.deep.includes({_id : post_id_test, user : login_test});",
+									"    pm.expect(jsonData.map(x => ({_id : x._id, user : x.user}))).to.deep.includes({_id : post_id_other, user : login_other});",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/post/ : test singular",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2b95de72-c302-4a5c-8c85-80763ab7ca30",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let post_id_test = pm.environment.get(\"post-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"let post_id_other = pm.environment.get(\"post-id-other\");",
+									"let login_other = pm.environment.get(\"login-other\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('array');",
+									"});",
+									" ",
+									"pm.test(\"User includes {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData.map(x => ({_id : x._id, user : x.user}))).to.deep.includes({_id : post_id_test, user : login_test});",
+									"    pm.expect(jsonData.map(x => ({_id : x._id, user : x.user}))).to.deep.includes({_id : post_id_other, user : login_other});",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/post/",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/ : non-existent OID (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33cec9e9-883b-429a-a584-39b73f45753f",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchTopic\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/5c9b9f391e7f31fcc8814608/posts",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"5c9b9f391e7f31fcc8814608",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:post/like",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb87051-84a6-44f2-9f8a-acb1f0936e1d",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"post-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.includes(login_test);",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key-test}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/like",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:post/like : toggle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb87051-84a6-44f2-9f8a-acb1f0936e1d",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"post-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.does.not.includes(login_test);",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/like",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:post/dislike",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb87051-84a6-44f2-9f8a-acb1f0936e1d",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"post-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.includes(login_test);",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/dislike",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"dislike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:post/dislike : toggle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb87051-84a6-44f2-9f8a-acb1f0936e1d",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"post-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.content).to.be.a('string');",
+									"    pm.expect(jsonData.likers).to.be.a('array').that.is.empty;",
+									"    pm.expect(jsonData.dislikers).to.be.a('array').that.does.not.includes(login_test);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/dislike",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"dislike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:post/like : non existent post (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb87051-84a6-44f2-9f8a-acb1f0936e1d",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchPost\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/5c9f90022081e905579d81aa/like",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"5c9f90022081e905579d81aa",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/clopen : closes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data modified open\", function () {",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(false);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/clopen",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"clopen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:post/like :  closed post (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8fb87051-84a6-44f2-9f8a-acb1f0936e1d",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"ClosedTopic\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/like",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:posts/delete : closed post (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c74176aa-ed36-44ae-89d2-bfaef4f8030f",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"ClosedTopic\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/clopen : opens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77338c93-367a-44ad-9a31-9169ca94744a",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let topic_id_test = pm.environment.get(\"topic-id-test\");",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"JSON data has topic {{topic-id-test}}\", function () {",
+									"    pm.expect(jsonData._id).to.eql(topic_id_test);",
+									"",
+									"});",
+									"",
+									"pm.test(\"JSON data modified open\", function () {",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/clopen",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"clopen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:posts/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c74176aa-ed36-44ae-89d2-bfaef4f8030f",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let post_id_test = pm.environment.get(\"post-id-test\");",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// UNSET ENV VAR",
+									"pm.environment.unset(\"post-id-test\");",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.deleted).to.eql(post_id_test);",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-test}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-test}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:posts/delete : non existent (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c74176aa-ed36-44ae-89d2-bfaef4f8030f",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoSuchPost\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "721d9481-6403-515d-a230-7c31566e33ab"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/5c9f950ae180dd0935733111/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"5c9f950ae180dd0935733111",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/:posts/delete : not mine (403)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c74176aa-ed36-44ae-89d2-bfaef4f8030f",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoOwnership\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/{{post-id-other}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"{{post-id-other}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/delete (UNSET ENV VAR topic-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d25f7bab-c646-4deb-a5f3-8a2c74b46869",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.unset(\"topic-id-test\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bug : poste avec content vide (julian cautela)",
+			"item": [
+				{
+					"name": "/topic/create (SET ENV VAR topic-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7757ac1-a8f3-4bb3-8185-ffead29a0198",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"let login_test = pm.environment.get(\"login-test\");",
+									"",
+									"pm.test(\"Body is JSON array\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									"",
+									"// SET ENV VAR",
+									"pm.environment.set(\"topic-id-test\", jsonData[\"_id\"]);",
+									"",
+									"",
+									"pm.test(\"User is {{login-test}}\", function () {",
+									"    pm.expect(jsonData.user).to.eql(login_test);",
+									"});",
+									"",
+									"pm.test(\"JSON object has valid schema\", function () {",
+									"    pm.expect(!isNaN(Date.parse(jsonData.date))).to.be.true;",
+									"    pm.expect(jsonData.open).to.be.a('boolean').that.eql(true);",
+									"    pm.expect(jsonData.topic).to.be.a('string');",
+									"    pm.expect(jsonData.desc).to.be.a('string');",
+									"    pm.expect(jsonData.posts).to.be.a('array').that.is.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description : {{$randomInt}}\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/create",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"create"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/posts/create (SET ENV VAR post-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de082f9e-6923-4712-85e3-57df40a73076",
+								"exec": [
+									"pm.test(\"Status\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									" ",
+									"pm.test(\"Error is NoSuchUser\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"NoContent\");",
+									"});",
+									"",
+									"pm.test(\"Error has non empty message\", function () {",
+									"     pm.expect(jsonData).to.have.property('message').that.is.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/posts/create",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"posts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/topic/:id/delete (UNSET ENV VAR topic-id-test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d25f7bab-c646-4deb-a5f3-8a2c74b46869",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.unset(\"topic-id-test\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-api-key",
+								"type": "text",
+								"value": "{{x-api-key-test}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"topic\": \"topic test\",\n    \"desc\": \"description\"\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/topic/{{topic-id-test}}/delete?",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"topic",
+								"{{topic-id-test}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "Topic de test",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "Description du topic",
+									"disabled": true
+								},
+								{
+									"key": "open",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7b4c0c60-1597-4ab4-b37b-7b627dfebea1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "69efbc75-349c-4fbc-8a4e-60dc2d0d6e2e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Root routes",
+			"item": [
+				{
+					"name": "/there-is-nothing-here (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "21e8517c-b49a-4f75-b61b-e3d3f4d175fb",
+								"exec": [
+									"pm.test(\"Status is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Error is ContentNotFound\", function () {",
+									"    pm.expect(jsonData.name).to.eql(\"ContentNotFound\");",
+									"});",
+									"",
+									"",
+									"const error_schema = {",
+									" \"name\": \"string\",",
+									" \"message\": \"string\"",
+									"};",
+									"",
+									"pm.test(\"Error object has valid schema\", function () {",
+									"      pm.expect(tv4.validate(jsonData, error_schema)).to.be.true;",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9e193b8c-d403-46ee-bd88-95e83240948a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/there-is-nothing-here",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"there-is-nothing-here"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/echo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "93f83579-019f-46aa-bd59-dbdd79ea94d5",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.expect(jsonData.msg).to.eql(\"message\");",
+									"    pm.expect(jsonData.val).to.eql(42);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"msg\" : \"message\",\n\t\"val\" : 42\n}"
+						},
+						"url": {
+							"raw": "{{server-prot}}://{{server-name}}:{{server-port}}/echo",
+							"protocol": "{{server-prot}}",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port}}",
+							"path": [
+								"echo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/echo  (http POST redirect)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "93f83579-019f-46aa-bd59-dbdd79ea94d5",
+								"exec": [
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Body is JSON object\", function () {",
+									"    pm.expect(jsonData).to.be.a('object');",
+									"});",
+									" ",
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.expect(jsonData.msg).to.eql(\"message\");",
+									"    pm.expect(jsonData.val).to.eql(42);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"msg\" : \"message\",\n\t\"val\" : 42\n}"
+						},
+						"url": {
+							"raw": "http://{{server-name}}:{{server-port-http}}/echo",
+							"protocol": "http",
+							"host": [
+								"{{server-name}}"
+							],
+							"port": "{{server-port-http}}",
+							"path": [
+								"echo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2127275c-5a9e-43a3-b091-e5cae433eb4a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "78202a37-7615-41cc-8320-3c1f1ee7d7e7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

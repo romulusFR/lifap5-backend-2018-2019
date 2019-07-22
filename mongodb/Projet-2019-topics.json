@@ -1,0 +1,92 @@
+[
+  {
+    
+    "topic" : "Pour ou contre la compensation par bloc en licence ?",
+    "open" : "true",
+    "desc" : "le 12/03/19, la CFVU va mettre fin à la compensation automatique entre toutes les UEs d'un semestre de licence, maintenant cela se fera par \"blocs de compétences\" qui n'ont pas encore été définis. Par exemple, si les transversales sont dans un bloc et les autres UEs dans un autre, cela veut dire que le la note de TR ne compensera pas les autres pour aider à avoir le semestre",
+    "user" : "albrecht.albert",
+    "date" : "2019-03-12T12:32:37.466Z",
+    "posts" : [
+        {
+          
+          "user"      : "berenice.bernardin",
+          "content"   : "Moi je trouve ça très bien car c'est quand même n'importe quoi de valider le S1 avec 15 en danse et 14 en anglais alors qu'on a 8 en programmation !",
+          "date"      : "2019-03-12T11:32:37.466Z",
+          "likers"    : ["romuald.thion"],
+          "dislikers"  : ["albrecht.albert", "communiste.camarade"]
+        },
+        {
+          
+          "user"      : "albrecht.albert",
+          "content"   : "@berenice.bernardin mais tu dis trop nawak ! Si tu prends foot c'est trop chaud d'avoir 15 en sport !",
+          "date"      : "2019-03-12T12:32:37.466Z",
+          "likers"    : ["albrecht.albert", "communiste.camarade","romuald.thion"],
+          "dislikers"  : ["berenice.bernardin"]
+        }
+    ]
+  },
+  {
+    
+    "topic" : "Le sens de la licence sans poursuite d'études en master ?",
+    "open" : "false",
+    "desc" : "L'université cible va séparer la licence (dans un collège universitaire de premier cycle) du master (qui sera dans un autre pôle). Cette séparation nouvelle va introduire une tentation beaucoup plus forte de sélectionner entre les deux. De plus, le projet d'université cible prévoit une licence professionalisante, la poursuite d'étude en master est donc moins garantie ?",
+    "user" : "communiste.camarade",
+    "date" : "2019-03-12T12:32:37.466Z",
+    "posts" : [
+      {
+        
+        "user"      : "albrecht.albert",
+        "content"   : "Sélection, sélection, sélection !",
+        "date"      : "2019-03-15T12:32:37.466Z",
+        "likers"    : ["albrecht.albert", "communiste.camarade","romuald.thion"],
+        "dislikers"  : []
+      }
+    ]
+  },
+  {
+    
+    "topic" : "Qui sont nos représentant-e-s ?",
+    "date"  : "2019-03-12T12:32:37.466Z",
+    "open" : "true",
+    "desc" : "Où trouver la liste des élu-e-s étudiant-e-s ? Il y en a t'il en informatique ?",
+    "user" : "communiste.camarade",
+    "posts" : [
+    ]
+  },
+  {
+    
+    "topic" : "Topic ouvert par utilisateur inconnu",
+    "open" : "true",
+    "desc" : "Pour les tests",
+    "date" : "2019-03-12T12:32:37.466Z",
+    "user" : "unknown.user",
+    "posts" : [
+      {
+        
+        "user"      : "unknown.user",
+        "content"   : "description de test!",
+        "date"      : "2019-03-12T12:32:37.466Z",
+        "likers"    : [],
+        "dislikers"  : []
+      }
+    ]
+  },
+  {
+    
+    "topic" : "Topic fermé par utilisateur inconnu",
+    "open" : "true",
+    "desc" : "Pour les tests",
+    "date" : "2019-03-12T12:32:37.466Z",
+    "user" : "unknown.user",
+    "posts" : [
+      {
+       
+        "user"      : "unknown.user",
+        "content"   : "description de test!",
+        "date"      : "2019-03-12T12:32:37.466Z",
+        "likers"    : [],
+        "dislikers"  : []
+      }
+    ]
+  }
+ ]
