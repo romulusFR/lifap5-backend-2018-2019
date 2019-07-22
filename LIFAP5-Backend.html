@@ -79,7 +79,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="keywords" content="LIFAP5, programmation fonctionnelle,Javascript" />
   <meta name="description" content="Projet de l'UE LIFAP5 - 2018-2019 - UCBL - FST - Informatique" />
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./Projet.css"/>
 </head>
 <body>
 <nav id="TOC" role="doc-toc">
@@ -107,7 +106,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><a href="#création-de-la-base-mongodb">Création de la base <code>mongodb</code></a><ul>
 <li><a href="#initialisation">Initialisation</a></li>
-<li><a href="#pour-exporterimporter">Pour exporter/importer</a></li>
+<li><a href="#pour-exporterimporter-manuellement">Pour exporter/importer manuellement</a></li>
 </ul></li>
 <li><a href="#dockerisation">Dockerisation</a></li>
 </ul></li>
@@ -261,7 +260,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb4-12" title="12"><span class="ex">mongod</span> --version</a>
 <a class="sourceLine" id="cb4-13" title="13"><span class="op">&gt;</span> <span class="ex">db</span> version v4.0.7</a></code></pre></div>
 <h3 id="initialisation-du-replica-set">Initialisation du replica set</h3>
-<p>Pour permettre de suivre en live les màj sur le serveur. Voir :</p>
+<p>Pour permettre de suivre en live les màj sur le serveur avec les websockets. Voir :</p>
 <ul>
 <li><a href="https://docs.mongodb.com/manual/replication/" class="uri">https://docs.mongodb.com/manual/replication/</a></li>
 <li><a href="https://docs.mongodb.com/manual/changeStreams/" class="uri">https://docs.mongodb.com/manual/changeStreams/</a></li>
@@ -329,16 +328,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="création-de-la-base-mongodb">Création de la base <code>mongodb</code></h2>
 <h3 id="initialisation">Initialisation</h3>
 <ul>
-<li>Pour générer les clefs d’API <code>gen-api-keys.py file-ids.tsv file-keys.tsv</code></li>
-<li>Voir script <code>install-mongo-tsv.sh</code></li>
+<li>Pour générer les clefs d’API avec <code>gen-api-keys.py</code>, voir le script <a href="./mongodb/generate-uuid.sh"><code>./mongodb/generate-uuid.sh</code></a></li>
+<li>Voir script <a href="./mongodb/install-mongo-tsv.sh"><code>./mongodb/install-mongo-tsv.sh</code></a> permet de créer la base.</li>
 </ul>
+<p>Les tests suivants devraient renvoyer des extraits de la collection</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">mongo</span> lifap5-backend --eval <span class="st">&quot;db.users.findOne()&quot;</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="ex">mongo</span> lifap5-backend --eval <span class="st">&quot;db.users.find({login : &#39;test&#39;})&quot;</span></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="ex">mongo</span> lifap5-backend --eval <span class="st">&quot;db.topics.findOne()&quot;</span></a></code></pre></div>
-<h3 id="pour-exporterimporter">Pour exporter/importer</h3>
-<ul>
-<li>Voir script <code>install-mongo.sh</code> pour l’import</li>
-</ul>
+<h3 id="pour-exporterimporter-manuellement">Pour exporter/importer manuellement</h3>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">mongoexport</span> --db=lifap5-backend --collection=topics --pretty --jsonArray  <span class="op">&gt;</span> Projet-2019-topics.json</a>
 <a class="sourceLine" id="cb9-2" title="2"></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="ex">mongoexport</span> --db=lifap5-backend --collection=users --pretty --jsonArray <span class="op">&gt;</span> Projet-2019-users-full.json</a>
@@ -413,6 +410,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h3 id="références-1">Références</h3>
 <p><a href="https://octoperf.com/blog/2018/03/29/jmeter-tutorial/#random-behavior" class="uri">https://octoperf.com/blog/2018/03/29/jmeter-tutorial/#random-behavior</a></p>
 <h1 id="déploiement-du-serveur-prod">Déploiement du serveur / prod</h1>
+<p>Cette partie est pour déployer un reverse-proxy nginx devant le serveur node et mettre en place quelques outils de monitoring.</p>
 <ul>
 <li>Cible : <a href="https://lifap5.univ-lyon1.fr:443" class="uri">https://lifap5.univ-lyon1.fr:443</a></li>
 <li>Connexion : voir <a href="./connect-server-prod.sh"><code>connect-server-prod.sh</code></a></li>

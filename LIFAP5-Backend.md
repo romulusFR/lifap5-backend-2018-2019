@@ -3,7 +3,6 @@ header-includes:
     <meta name="keywords" content="LIFAP5, programmation fonctionnelle,Javascript" />
     <meta name="description" content="Projet de l'UE LIFAP5 - 2018-2019 - UCBL - FST - Informatique" />
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="./Projet.css"/>
 lang:
     fr
 pagetitle:
@@ -145,9 +144,11 @@ mongod --version
 > db version v4.0.7
 ```
 
+
+
 ### Initialisation du replica set
 
-Pour permettre de suivre en live les màj sur le serveur. Voir :
+Pour permettre de suivre en live les màj sur le serveur avec les websockets. Voir :
 
 * <https://docs.mongodb.com/manual/replication/>
 * <https://docs.mongodb.com/manual/changeStreams/>
@@ -230,8 +231,10 @@ Création de la base `mongodb`
 
 ### Initialisation
 
-* Pour générer les clefs d'API `gen-api-keys.py file-ids.tsv file-keys.tsv`
-* Voir script `install-mongo-tsv.sh`
+* Pour générer les clefs d'API avec `gen-api-keys.py`, voir le script [`./mongodb/generate-uuid.sh`](./mongodb/generate-uuid.sh)
+* Voir script [`./mongodb/install-mongo-tsv.sh`](./mongodb/install-mongo-tsv.sh) permet de créer la base.
+
+Les tests suivants devraient renvoyer des extraits de la collection
 
 ```bash
 mongo lifap5-backend --eval "db.users.findOne()"
@@ -239,9 +242,7 @@ mongo lifap5-backend --eval "db.users.find({login : 'test'})"
 mongo lifap5-backend --eval "db.topics.findOne()"
 ```
 
-### Pour exporter/importer
-
-* Voir script `install-mongo.sh` pour l'import
+### Pour exporter/importer manuellement
 
 ```bash
 mongoexport --db=lifap5-backend --collection=topics --pretty --jsonArray  > Projet-2019-topics.json
@@ -340,6 +341,8 @@ Tidying up ...    @ Tue Apr 02 14:41:02 CEST 2019 (1554208862638)
 
 Déploiement du serveur / prod
 =============================
+
+Cette partie est pour déployer un reverse-proxy nginx devant le serveur node et mettre en place quelques outils de monitoring.
 
 * Cible : <https://lifap5.univ-lyon1.fr:443>
 * Connexion : voir [`connect-server-prod.sh`](./connect-server-prod.sh)
