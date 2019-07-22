@@ -12,10 +12,6 @@
     "start:dev": "DEBUG=lifap5:* nodemon server.js",
     "test": "newman -k -e ../tests/lifap5-backend-env.postman_environment.json run ../tests/lifap5-backend.postman_collection.json"
   },
-  "repository": {
-    "type": "svn",
-    "url": "https://subversion.renater.fr/lifap5/trunk/Projet"
-  },
   "keywords": [
     "lifap5",
     "licence",
