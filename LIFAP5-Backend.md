@@ -82,6 +82,18 @@ Documentations de référence
 Installation environnement de développement
 ===========================================
 
+Ci dessous, la création pas-à-pas du projet. Le fichier [`./backend/package.json`](./backend/package.json) contient déjà toutes les dépendences.
+Une fois Mongo d'installé, installer les dépendances et exécuter le serveur ainsi :
+
+```bash
+# création de la base mongodb
+cd backend
+npm install
+npm start # lancé en mode développement par défaut
+curl http://localhost:3000/topics/ # doit afficher une liste de topics avec leur créateur
+npm test  # lance les tests automatisés avec newman : les 178 assertions doivent être OK
+```
+
 Installation Nodejs
 -------------------
 
