@@ -9,8 +9,8 @@ pagetitle:
     LIFAP5 - Projet - documentation backend
 ---
 
-LIFAP5 - Projet : documentation backend
-=======================================
+LIFAP5 - Projet 2018-2019 : documentation backend
+=================================================
 
 
 Ce document est le guide de développement et de référence du serveur du projet 2018-2019 de l'unité d'enseignement [LIFAP5 "Programmation fonctionnelle pour le WEB"](https://perso.liris.cnrs.fr/romuald.thion/dokuwiki/doku.php?id=enseignement:lifap5:start) en licence 2 informatique UCBL. 
@@ -27,7 +27,7 @@ Site LIFAP5
 Dépôt de code
 -------------
 
-* Sur github <https://github.com/romulusFR/node-rest-api-lifap5>
+* Sur github <https://github.com/romulusFR/lifap5-backend-2018-2019>
 * Sur Renater <https://sourcesup.renater.fr/projects/lifap5/> (accès restreint)
 
 ```bash
